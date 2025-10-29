@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -25,5 +25,10 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run CI tests (Jest + E2E)
-        run: npm run ci:test
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Run tests (unit + e2e)
+        run: |
+          npm run test
+          npx start-server-and-test 'npm start' http://localhost:3000 'npm run test:e2e'
