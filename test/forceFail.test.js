@@ -1,3 +1,3 @@
-test("this test should fail intentionally but know i make it pass", () => {
+test("this test should pass", () => {
   expect(true).toBe(true);
 });
