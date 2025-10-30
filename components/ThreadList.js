@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchThreads } from "../features/threads/threadsSlice";
-import { fetchUsers } from "../features/users/usersSlice";
-import ThreadItem from "./ThreadItem";
-import Loading from "./Loading";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchThreads } from '../features/threads/threadsSlice';
+import { fetchUsers } from '../features/users/usersSlice';
+import ThreadItem from './ThreadItem';
+import Loading from './Loading';
 
 export default function ThreadList() {
   const dispatch = useDispatch();
@@ -13,11 +13,11 @@ export default function ThreadList() {
   const { items: users, status: usersStatus } = useSelector((s) => s.users);
 
   useEffect(() => {
-    if (threadsStatus === "idle") dispatch(fetchThreads());
-    if (usersStatus === "idle") dispatch(fetchUsers());
+    if (threadsStatus === 'idle') dispatch(fetchThreads());
+    if (usersStatus === 'idle') dispatch(fetchUsers());
   }, [dispatch, threadsStatus, usersStatus]);
 
-  if (threadsStatus === "loading" || usersStatus === "loading")
+  if (threadsStatus === 'loading' || usersStatus === 'loading')
     return <Loading />;
 
   const threadsWithOwner = threads.map((t) => ({
