@@ -1,12 +1,12 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import client from "../../api/client";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import client from '../../api/client';
 
 // register
 export const registerUser = createAsyncThunk(
-  "auth/register",
+  'auth/register',
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await client.post("/register", payload);
+      const res = await client.post('/register', payload);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
@@ -16,15 +16,15 @@ export const registerUser = createAsyncThunk(
 
 // login
 export const loginUser = createAsyncThunk(
-  "auth/login",
+  'auth/login',
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await client.post("/login", payload);
+      const res = await client.post('/login', payload);
       const { token } = res.data.data;
 
       // ✅ hanya jalankan di client side
-      if (typeof window !== "undefined") {
-        localStorage.setItem("token", token);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', token);
       }
 
       return { token };
@@ -36,10 +36,10 @@ export const loginUser = createAsyncThunk(
 
 // fetch own profile
 export const fetchMe = createAsyncThunk(
-  "auth/fetchMe",
+  'auth/fetchMe',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await client.get("/users/me");
+      const res = await client.get('/users/me');
       return res.data.data.user;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
@@ -49,8 +49,8 @@ export const fetchMe = createAsyncThunk(
 
 // ✅ Cegah error SSR: hanya ambil token di client
 const getTokenSafe = () => {
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("token");
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('token');
   }
   return null;
 };
@@ -58,12 +58,12 @@ const getTokenSafe = () => {
 const initialState = {
   token: getTokenSafe(),
   user: null,
-  status: "idle",
+  status: 'idle',
   error: null,
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     logout(state) {
@@ -71,8 +71,8 @@ const authSlice = createSlice({
       state.user = null;
 
       // ✅ Aman untuk Next.js
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("token");
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
       }
     },
   },

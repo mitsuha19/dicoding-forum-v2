@@ -4,16 +4,16 @@
  * 2. Saat createThread gagal, state.error harus terisi dan status menjadi "failed".
  */
 
-import { configureStore } from "@reduxjs/toolkit";
-import threadReducer, { createThread } from "../features/threads/threadsSlice";
-import client from "../api/client";
+import { configureStore } from '@reduxjs/toolkit';
+import threadReducer, { createThread } from '../features/threads/threadsSlice';
+import client from '../api/client';
 
-jest.mock("../api/client");
+jest.mock('../api/client');
 
-describe("Thread Create Thunk Tests", () => {
-  test("should create thread successfully", async () => {
+describe('Thread Create Thunk Tests', () => {
+  test('should create thread successfully', async () => {
     // thread baru yang akan dikembalikan API
-    const newThread = { id: 123, title: "Thread Baru dari User" };
+    const newThread = { id: 123, title: 'Thread Baru dari User' };
 
     // mock client.post agar resolve sukses
     client.post.mockResolvedValue({
@@ -28,9 +28,9 @@ describe("Thread Create Thunk Tests", () => {
     // dispatch thunk createThread dengan payload
     await store.dispatch(
       createThread({
-        title: "Thread Baru dari User",
-        body: "Isi thread apa saja",
-        category: "general",
+        title: 'Thread Baru dari User',
+        body: 'Isi thread apa saja',
+        category: 'general',
       })
     );
 
@@ -45,9 +45,9 @@ describe("Thread Create Thunk Tests", () => {
     //    (kalau nantinya kamu mau atur status, boleh diassert juga)
   });
 
-  test("should handle createThread error", async () => {
+  test('should handle createThread error', async () => {
     // mock client.post gagal
-    client.post.mockRejectedValue({ message: "Unauthorized" });
+    client.post.mockRejectedValue({ message: 'Unauthorized' });
 
     const store = configureStore({
       reducer: { threads: threadReducer },
@@ -56,9 +56,9 @@ describe("Thread Create Thunk Tests", () => {
     // coba buat thread
     await store.dispatch(
       createThread({
-        title: "Harusnya gagal",
-        body: "Isi",
-        category: "secret",
+        title: 'Harusnya gagal',
+        body: 'Isi',
+        category: 'secret',
       })
     );
 

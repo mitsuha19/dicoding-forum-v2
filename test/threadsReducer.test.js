@@ -1,20 +1,20 @@
 import threadsReducer, {
   fetchThreads,
   createThread,
-} from "../features/threads/threadsSlice";
+} from '../features/threads/threadsSlice';
 
-describe("Threads Reducer Tests", () => {
-  test("should handle fetchThreads.fulfilled by replacing items", () => {
+describe('Threads Reducer Tests', () => {
+  test('should handle fetchThreads.fulfilled by replacing items', () => {
     const initialState = {
       items: [],
       selectedThread: null,
-      status: "idle",
+      status: 'idle',
       error: null,
     };
 
     const mockPayload = [
-      { id: 1, title: "Thread A" },
-      { id: 2, title: "Thread B" },
+      { id: 1, title: 'Thread A' },
+      { id: 2, title: 'Thread B' },
     ];
 
     const action = {
@@ -25,19 +25,19 @@ describe("Threads Reducer Tests", () => {
     const state = threadsReducer(initialState, action);
 
     expect(state.items).toEqual(mockPayload);
-    expect(state.status).toBe("succeeded");
+    expect(state.status).toBe('succeeded');
     expect(state.error).toBeNull();
   });
 
-  test("should handle createThread.fulfilled by unshifting new thread", () => {
+  test('should handle createThread.fulfilled by unshifting new thread', () => {
     const initialState = {
-      items: [{ id: 10, title: "Existing" }],
+      items: [{ id: 10, title: 'Existing' }],
       selectedThread: null,
-      status: "idle",
+      status: 'idle',
       error: null,
     };
 
-    const newThread = { id: 99, title: "Thread Baru" };
+    const newThread = { id: 99, title: 'Thread Baru' };
 
     const action = {
       type: createThread.fulfilled.type,
@@ -48,6 +48,6 @@ describe("Threads Reducer Tests", () => {
 
     // thread baru harus masuk di depan
     expect(state.items[0]).toEqual(newThread);
-    expect(state.items[1]).toEqual({ id: 10, title: "Existing" });
+    expect(state.items[1]).toEqual({ id: 10, title: 'Existing' });
   });
 });

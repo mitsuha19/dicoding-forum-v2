@@ -1,13 +1,12 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import client from "../../api/client";
-import { fetchUsers } from "../users/usersSlice";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import client from '../../api/client';
 
 // Ambil semua threads
 export const fetchThreads = createAsyncThunk(
-  "threads/fetchAll",
+  'threads/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await client.get("/threads");
+      const res = await client.get('/threads');
       return res.data.data.threads;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
@@ -17,7 +16,7 @@ export const fetchThreads = createAsyncThunk(
 
 // Ambil detail thread berdasarkan ID
 export const fetchThreadById = createAsyncThunk(
-  "threads/fetchById",
+  'threads/fetchById',
   async (id, { rejectWithValue }) => {
     try {
       const res = await client.get(`/threads/${id}`);
@@ -30,10 +29,10 @@ export const fetchThreadById = createAsyncThunk(
 
 // Buat thread baru
 export const createThread = createAsyncThunk(
-  "threads/create",
+  'threads/create',
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await client.post("/threads", payload);
+      const res = await client.post('/threads', payload);
       return res.data.data.thread;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
@@ -42,36 +41,36 @@ export const createThread = createAsyncThunk(
 );
 
 const threadsSlice = createSlice({
-  name: "threads",
+  name: 'threads',
   initialState: {
     items: [],
     selectedThread: null,
-    status: "idle",
+    status: 'idle',
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchThreads.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(fetchThreads.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = 'succeeded';
         state.items = action.payload;
       })
       .addCase(fetchThreads.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.payload;
       })
       .addCase(fetchThreadById.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(fetchThreadById.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = 'succeeded';
         state.selectedThread = action.payload;
       })
       .addCase(fetchThreadById.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.payload;
       })
       .addCase(createThread.fulfilled, (state, action) => {

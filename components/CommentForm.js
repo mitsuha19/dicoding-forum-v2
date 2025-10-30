@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createComment } from "../features/threads/threadDetailSlice";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createComment } from '../features/threads/threadDetailSlice';
 
 export default function CommentForm({ threadId }) {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [showLoginAlert, setShowLoginAlert] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +22,7 @@ export default function CommentForm({ threadId }) {
 
     setLoading(true);
     await dispatch(createComment({ threadId, content }));
-    setContent("");
+    setContent('');
     setLoading(false);
     setShowLoginAlert(false);
   };
@@ -36,11 +36,11 @@ export default function CommentForm({ threadId }) {
           placeholder="Tulis komentar..."
           rows={3}
           style={{
-            width: "100%",
-            padding: "8px",
+            width: '100%',
+            padding: '8px',
             borderRadius: 8,
-            border: "1px solid #ccc",
-            resize: "none",
+            border: '1px solid #ccc',
+            resize: 'none',
           }}
         />
         <button
@@ -48,20 +48,20 @@ export default function CommentForm({ threadId }) {
           disabled={loading}
           style={{
             marginTop: 8,
-            backgroundColor: "#0070f3",
-            color: "white",
-            border: "none",
+            backgroundColor: '#0070f3',
+            color: 'white',
+            border: 'none',
             borderRadius: 6,
-            padding: "8px 16px",
-            cursor: "pointer",
+            padding: '8px 16px',
+            cursor: 'pointer',
           }}
         >
-          {loading ? "Mengirim..." : "Kirim"}
+          {loading ? 'Mengirim...' : 'Kirim'}
         </button>
       </form>
 
       {showLoginAlert && (
-        <p style={{ color: "red", marginTop: 8 }}>
+        <p style={{ color: 'red', marginTop: 8 }}>
           Silakan login terlebih dahulu sebelum berkomentar.
         </p>
       )}

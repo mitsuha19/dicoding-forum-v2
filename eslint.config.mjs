@@ -1,47 +1,23 @@
 import js from "@eslint/js";
 import globals from "globals";
-import reactPlugin from "eslint-plugin-react";
-import nextPlugin from "@next/eslint-plugin-next";
-import babelParser from "@babel/eslint-parser";
+import pluginReact from "eslint-plugin-react";
+import { defineConfig } from "eslint/config";
+import daStyle from "eslint-config-dicodingacademy";
 
-/** @type {import("eslint").Linter.FlatConfig[]} */
-export default [
-  js.configs.recommended,
+export default defineConfig([
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-    ignores: ["node_modules/", ".next/", "dist/", "build/", "public/"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      parser: babelParser,
-      parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          presets: ["next/babel"], // penting untuk dukung Next.js dan JSX
-        },
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
-    plugins: {
-      react: reactPlugin,
-      "@next/next": nextPlugin,
-    },
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
+    files: ["**/*.{js,mjs,cjs,jsx}"],
+    plugins: { js },
+    extends: ["js/recommended"],
+    languageOptions: { globals: globals.browser },
+  },
+  pluginReact.configs.flat.recommended,
+  daStyle,
+  {
+    settings: { react: { version: "detect" } },
     rules: {
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
-      "no-unused-vars": "warn",
-      "no-console": "warn",
-      semi: ["error", "always"],
-      quotes: ["error"],
-      "@next/next/no-html-link-for-pages": "off",
     },
   },
-];
+]);
